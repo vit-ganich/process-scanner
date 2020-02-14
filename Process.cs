@@ -4,19 +4,15 @@ using System.Diagnostics;
 
 namespace ProcessScanner
 {
-    public enum Status
+    public class Process
     {
-        Running,
-        Terminated
-    }
+        private readonly System.Diagnostics.Process process;
 
-    public class ProcessInstance
-    {
-        private readonly Process process;
         private readonly int workTimeLimit;
+
         private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
 
-        public ProcessInstance(Process process, int workTimeLimit)
+        public Process(System.Diagnostics.Process process, int workTimeLimit)
         {
             this.process = process;
             this.workTimeLimit = workTimeLimit;
@@ -59,5 +55,11 @@ namespace ProcessScanner
                 return Status.Running;
             }
         }
+    }
+
+    public enum Status
+    {
+        Running,
+        Terminated
     }
 }

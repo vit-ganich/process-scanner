@@ -35,9 +35,9 @@ namespace ProcessScanner
 
             logger.Info("Program started");
 
-            var runningProcesses = GetProcessInstances(processesNamesFromCMD, timeLimitMin);
+            List<Process> runningProcesses = GetProcessInstances(processesNamesFromCMD, timeLimitMin);
 
-            var terminatedProcessesCount = 0;
+            int terminatedProcessesCount = 0;
 
             while (true)
             {
@@ -49,7 +49,7 @@ namespace ProcessScanner
                 
                 if (runningProcesses.Count <= terminatedProcessesCount)
                 {
-                    logger.Info("Program finished. Bye!\n");
+                    logger.Info("All processes have been terminated. Program finished. Bye!\n");
                     break;
                 }
                     
@@ -67,15 +67,15 @@ namespace ProcessScanner
         /// <param name="procNamesCMD"></param>
         /// <param name="timeLimitMin"></param>
         /// <returns>List of </returns>
-        static List<ProcessInstance> GetProcessInstances(IEnumerable<string> procNamesCMD, int timeLimitMin)
+        static List<Process> GetProcessInstances(IEnumerable<string> procNamesCMD, int timeLimitMin)
         {
-            var procInstList = new List<ProcessInstance>();
+            var procInstList = new List<Process>();
 
             foreach(var procName in procNamesCMD)
             {
                 logger.Debug("Looking for running processes with name '{0}'", procName);
 
-                Process[] runningProceses = Process.GetProcessesByName(procName.Trim());
+                System.Diagnostics.Process[] runningProceses = System.Diagnostics.Process.GetProcessesByName(procName.Trim());
 
                 if (runningProceses.Length == 0)
                 {
@@ -85,7 +85,7 @@ namespace ProcessScanner
                     
                 foreach(var singleProc in runningProceses)
                 {
-                    var process = new ProcessInstance(singleProc, timeLimitMin);
+                    var process = new Process(singleProc, timeLimitMin);
                     procInstList.Add(process);
                     logger.Info("Found process '{0}' with ID '{1}' | Started: {2}", process.Name, process.ID, process.StartTime.ToString("HH:mm:ss"));
                 }
