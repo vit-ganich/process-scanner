@@ -23,8 +23,11 @@ namespace ProcessScanner
         }
 
         public string Name => process.ProcessName;
+
         public int ID => process.Id;
+
         public DateTime StartTime => process.StartTime;
+
         private int TimeDelta { 
             get
             {
