@@ -34,8 +34,10 @@ namespace ProcessScanner
             get
             {
                 if (process.HasExited)
+                {
                     return Status.Terminated;
-
+                }
+              
                 if (workTimeLimit <= TimeDelta)
                 {
                     try

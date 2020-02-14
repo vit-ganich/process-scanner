@@ -18,7 +18,6 @@ namespace ProcessScanner
         [Option('i', "interval", Required = true, HelpText = "Specifies the repeat interval in minutes.")]
         public int IntervalMin { get; set; }
 
-
         [Usage(ApplicationAlias = "ProcessScanner.exe")]
         public static IEnumerable<Example> Examples => new List<Example>() {
                         new Example(helpTemplate, 
