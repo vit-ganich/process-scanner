@@ -4,6 +4,9 @@ using System.Diagnostics;
 
 namespace ProcessScanner
 {
+    /// <summary>
+    /// Class with information about each process
+    /// </summary>
     public class ProcInfo
     {
         private readonly System.Diagnostics.Process process;

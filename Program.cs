@@ -62,7 +62,7 @@ namespace ProcessScanner
         }
 
         /// <summary>
-        /// Create a list of ProcessInstance instances for each process name from the command line
+        /// Create a list of ProcInfo instances for each process name from the command line
         /// </summary>
         /// <param name="procNamesCMD"></param>
         /// <param name="timeLimitMin"></param>
@@ -88,12 +88,16 @@ namespace ProcessScanner
                     var process = new ProcInfo(singleProc, timeLimitMin);
                     procInstList.Add(process);
                     logger.Info("Found process '{0}' with ID '{1}' | Started: {2}", 
-                        singleProc.ProcessName, singleProc.Id, singleProc.StartTime.ToString("HH:mm:ss"));
+                                singleProc.ProcessName, singleProc.Id, singleProc.StartTime.ToString("HH:mm:ss"));
                 }
             }
             return procInstList;
         }
 
+        /// <summary>
+        /// Timer for countdown visualization
+        /// </summary>
+        /// <param name="intervalMin"></param>
         static async void Timer(int intervalMin)
         {
             int seconds = intervalMin * 60;

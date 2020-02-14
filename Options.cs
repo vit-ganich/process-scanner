@@ -5,7 +5,7 @@ using CommandLine.Text;
 namespace ProcessScanner
 {
     /// <summary>
-    /// Class for command-line options
+    /// Class for parsing command-line options
     /// </summary>
     public class Options
     {
