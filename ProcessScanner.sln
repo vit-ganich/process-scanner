@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29709.97
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProcessScanner", "ProcessScanner.csproj", "{AA2BEF73-48BC-4D1B-90ED-351D8ECB88D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA2BEF73-48BC-4D1B-90ED-351D8ECB88D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA2BEF73-48BC-4D1B-90ED-351D8ECB88D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA2BEF73-48BC-4D1B-90ED-351D8ECB88D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA2BEF73-48BC-4D1B-90ED-351D8ECB88D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F549DCA3-54F4-4D9E-94E3-DF68C3EB65B1}
+	EndGlobalSection
+EndGlobal
