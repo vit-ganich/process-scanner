@@ -4,7 +4,6 @@ using System.Diagnostics;
 
 namespace ProcessScanner
 {
-    
     public enum Status
     {
         Running,
@@ -25,11 +24,11 @@ namespace ProcessScanner
 
         public string Name => process.ProcessName;
         public int ID => process.Id;
+        public DateTime StartTime => process.StartTime;
         private int TimeDelta { 
             get
             {
-                DateTime timeNow = DateTime.Now;
-                var delta = timeNow - process.StartTime;
+                var delta = DateTime.Now - StartTime;
                 return (int)delta.TotalMinutes;
             }
         }

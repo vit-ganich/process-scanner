@@ -9,18 +9,15 @@ namespace ProcessScanner
 {
     class Program
     {
-        private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
+        static readonly ILogger logger = LogManager.GetCurrentClassLogger();
 
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
-//#if DEBUG
-//                        args = new[] { "-n", "chrome, notepad", "-l", "0", "-i", "1" };
-//#endif
-
             IEnumerable<string> processesNamesFromCMD = new List<string>();
             int timeLimitMin = 0;
             int intervalMin = 0;
 
+            // Parse command-line arguments
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(opt =>
                 {
@@ -28,6 +25,15 @@ namespace ProcessScanner
                     timeLimitMin = opt.TimeLimitMin;
                     intervalMin = opt.IntervalMin;
                 });
+
+            // To terminate the program with invalid arguments
+            if (timeLimitMin == 0 || intervalMin < 1)
+            {
+                logger.Info("Invalid arguments: 'limit' and 'interval' must be more than zero. Program stopped.");
+                return 1;
+            }
+
+            logger.Info("Program started");
 
             var runningProcesses = GetProcessInstances(processesNamesFromCMD, timeLimitMin);
 
@@ -49,8 +55,10 @@ namespace ProcessScanner
                     
                 logger.Debug("Wait for '{0}' minutes", intervalMin);
                 Timer(intervalMin);
+                Console.WriteLine();
                 System.Threading.Thread.Sleep(intervalMin * 60000);
             }
+            return 0;
         }
 
         /// <summary>
@@ -61,9 +69,6 @@ namespace ProcessScanner
         /// <returns>List of </returns>
         static List<ProcessInstance> GetProcessInstances(IEnumerable<string> procNamesCMD, int timeLimitMin)
         {
-            if (procNamesCMD != null && timeLimitMin != 0)
-                logger.Info("Program started"); // To avoid unnesessary entries in the console
-
             var procInstList = new List<ProcessInstance>();
 
             foreach(var procName in procNamesCMD)
@@ -82,22 +87,21 @@ namespace ProcessScanner
                 {
                     var process = new ProcessInstance(singleProc, timeLimitMin);
                     procInstList.Add(process);
-                    logger.Info("Found process '{0}' with ID '{1}'", process.Name, process.ID);
+                    logger.Info("Found process '{0}' with ID '{1}' | Started: {2}", process.Name, process.ID, process.StartTime.ToString("HH:mm:ss"));
                 }
             }
             return procInstList;
         }
 
-        private static async void Timer(int intervalMin)
+        static async void Timer(int intervalMin)
         {
             int seconds = intervalMin * 60;
             while (seconds != 0)
             {
                 await Task.Delay(TimeSpan.FromSeconds(1));
-                Console.Write("\rCountdown: {0} sec", seconds);
+                Console.Write("\rCountdown: {0} sec\r", seconds);
                 seconds--;
             }
-            Console.WriteLine("\r");
         }
     }
 }
