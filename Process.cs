@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace ProcessScanner
 {
-    public class Process
+    public class ProcInfo
     {
         private readonly System.Diagnostics.Process process;
 
@@ -12,22 +12,16 @@ namespace ProcessScanner
 
         private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
 
-        public Process(System.Diagnostics.Process process, int workTimeLimit)
+        public ProcInfo(Process process, int workTimeLimit)
         {
             this.process = process;
             this.workTimeLimit = workTimeLimit;
         }
 
-        public string Name => process.ProcessName;
-
-        public int ID => process.Id;
-
-        public DateTime StartTime => process.StartTime;
-
         private int TimeDelta { 
             get
             {
-                var delta = DateTime.Now - StartTime;
+                var delta = DateTime.Now - process.StartTime;
                 return (int)delta.TotalMinutes;
             }
         }
@@ -44,12 +38,12 @@ namespace ProcessScanner
                     try
                     {
                         process.Kill();
-                        logger.Info("SUCCESS! Process {0} with ID {1} terminated", Name, ID);
+                        logger.Info("SUCCESS! Process {0} with ID {1} terminated", process.ProcessName, process.Id);
                         return Status.Terminated;
                     }
                     catch (Exception ex)
                     {
-                        logger.Error(ex, "Error while terminating process {0} with ID {1}", Name, ID);
+                        logger.Error(ex, "Error while terminating process {0} with ID {1}", process.ProcessName, process.Id);
                     }
                 }
                 return Status.Running;

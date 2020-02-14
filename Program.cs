@@ -35,7 +35,7 @@ namespace ProcessScanner
 
             logger.Info("Program started");
 
-            List<Process> runningProcesses = GetProcessInstances(processesNamesFromCMD, timeLimitMin);
+            List<ProcInfo> runningProcesses = CreateProcessInstances(processesNamesFromCMD, timeLimitMin);
 
             int terminatedProcessesCount = 0;
 
@@ -67,15 +67,15 @@ namespace ProcessScanner
         /// <param name="procNamesCMD"></param>
         /// <param name="timeLimitMin"></param>
         /// <returns>List of </returns>
-        static List<Process> GetProcessInstances(IEnumerable<string> procNamesCMD, int timeLimitMin)
+        static List<ProcInfo> CreateProcessInstances(IEnumerable<string> procNamesCMD, int timeLimitMin)
         {
-            var procInstList = new List<Process>();
+            var procInstList = new List<ProcInfo>();
 
             foreach(var procName in procNamesCMD)
             {
                 logger.Debug("Looking for running processes with name '{0}'", procName);
 
-                System.Diagnostics.Process[] runningProceses = System.Diagnostics.Process.GetProcessesByName(procName.Trim());
+                Process[] runningProceses = Process.GetProcessesByName(procName.Trim());
 
                 if (runningProceses.Length == 0)
                 {
@@ -85,9 +85,10 @@ namespace ProcessScanner
                     
                 foreach(var singleProc in runningProceses)
                 {
-                    var process = new Process(singleProc, timeLimitMin);
+                    var process = new ProcInfo(singleProc, timeLimitMin);
                     procInstList.Add(process);
-                    logger.Info("Found process '{0}' with ID '{1}' | Started: {2}", process.Name, process.ID, process.StartTime.ToString("HH:mm:ss"));
+                    logger.Info("Found process '{0}' with ID '{1}' | Started: {2}", 
+                        singleProc.ProcessName, singleProc.Id, singleProc.StartTime.ToString("HH:mm:ss"));
                 }
             }
             return procInstList;
