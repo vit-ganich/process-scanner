@@ -55,7 +55,9 @@ namespace ProcessScanner
                     
                 logger.Debug("Wait for '{0}' minutes", intervalMin);
                 Timer(intervalMin);
-                Console.WriteLine();
+                Console.WriteLine(); // For better visualization
+
+                // Wait for specified number of minutes
                 System.Threading.Thread.Sleep(intervalMin * 60000);
             }
             return 0;
