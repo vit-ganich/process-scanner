@@ -26,7 +26,7 @@ namespace ProcessScanner
                     intervalMin = opt.IntervalMin;
                 });
 
-            // To terminate the program with invalid arguments
+            // Terminate the program with invalid arguments
             if (timeLimitMin == 0 || intervalMin < 1)
             {
                 logger.Info("Invalid arguments: 'limit' and 'interval' must be more than zero. Program stopped.");
